@@ -1,6 +1,13 @@
+asgiref==3.5.2
+autopep8==1.6.0
 Django==3.2.7
-uwsgi==2.0.19
-mysqlclient
-autopep8
+django-cors-headers==3.12.0
 djangorestframework==3.13.1
 djangorestframework-jwt==1.11.0
+mysqlclient==2.1.0
+pycodestyle==2.8.0
+PyJWT==1.7.1
+pytz==2022.1
+sqlparse==0.4.2
+toml==0.10.2
+uWSGI==2.0.19
