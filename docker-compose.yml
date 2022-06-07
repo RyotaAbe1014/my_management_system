@@ -17,7 +17,7 @@ services:
     tty: true
     networks:
      - django_app_network
-
+    #  Vue
   frontend:
     build:
       context: ./frontend
