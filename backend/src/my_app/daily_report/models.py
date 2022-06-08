@@ -21,3 +21,4 @@ class DailyReport(BaseModel):
     target_date = models.DateTimeField()
     class Meta:
         db_table = 'daily_reports'
+        ordering = ['target_date']
