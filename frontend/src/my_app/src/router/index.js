@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import TopPageView from '../views/TopPageView.vue'
-
+import TagList from '../views/tag/TagList.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -11,10 +11,10 @@ const routes = [
     component: TopPageView
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    path: '/tag',
+    name: 'TagList',
+    component: TagList
+  },
 ]
 
 const router = new VueRouter({

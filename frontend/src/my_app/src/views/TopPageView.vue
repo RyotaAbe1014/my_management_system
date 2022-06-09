@@ -95,7 +95,9 @@
                   <p class="text-h5 text--primary">タグ一覧</p>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn class="mx-auto" outlined color="primary"> GO </v-btn>
+                  <router-link to="tag" class="mx-auto" style="text-decoration: none;">
+                    <v-btn class="mx-auto" outlined color="primary"> GO </v-btn>
+                  </router-link>
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -120,22 +122,8 @@
 import AppBar from "../components/layouts/AppBar.vue";
 export default {
   name: "TopPage",
-
   components: {
     AppBar,
-  },
-  methods: {
-    async get() {
-      const data = await this.axios
-        .get("http://0.0.0.0:8000/api/tag/index/")
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((e) => {
-          console.log("エラー", e);
-        });
-      console.log(data);
-    },
   },
 };
 </script>
