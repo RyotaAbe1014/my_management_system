@@ -101,16 +101,6 @@
                 </v-card-actions>
               </v-card>
             </v-col>
-            <v-col cols="6" md="2">
-              <v-card class="mx-auto" max-width="344" height="150">
-                <v-card-text>
-                  <p class="text-h5 text--primary">タグ検索</p>
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn class="mx-auto" outlined color="primary"> GO </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
           </template>
         </v-row>
       </v-container>

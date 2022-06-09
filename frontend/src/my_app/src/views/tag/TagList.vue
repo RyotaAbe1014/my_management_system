@@ -4,18 +4,22 @@
     <v-main class="grey lighten-2">
       <v-container>
         <h1>タグ一覧</h1>
+        <div class="search">
+          <v-text-field
+            type="text"
+            v-model="keyword"
+            label="検索"
+          ></v-text-field>
+        </div>
         <v-container>
           <v-row>
-            <!-- <v-col height="200" v-for="tag in tags" :key="tag.id" cols="2">
-              <v-chip color="blue" link outlined pill>{{ tag.name }}</v-chip>
-            </v-col> -->
-            <v-col cols="8" class="white d-flex flex-wrap">
+            <v-col cols="10" class="white d-flex flex-wrap">
               <v-chip
                 color="blue"
                 link
                 outlined
                 pill
-                v-for="tag in tags"
+                v-for="tag in filteredTags"
                 :key="tag.id"
                 class="ml-3 mt-3"
                 >{{ tag.name }}</v-chip
@@ -38,6 +42,7 @@ export default {
   data() {
     return {
       tags: [],
+      keyword: "",
     };
   },
   mounted() {
@@ -45,7 +50,7 @@ export default {
   },
   methods: {
     async getTags() {
-      const data = await this.axios
+      await this.axios
         .get("http://0.0.0.0:8000/api/tag/index/")
         .then((response) => {
           console.log(response);
@@ -54,7 +59,18 @@ export default {
         .catch((e) => {
           console.log("エラー", e);
         });
-      console.log(data);
+    },
+  },
+  computed: {
+    filteredTags() {
+      let tags = [];
+      for (let i in this.tags) {
+        let tag = this.tags[i];
+        if (tag.name.indexOf(this.keyword) !== -1) {
+          tags.push(tag);
+        }
+      }
+      return tags;
     },
   },
 };
