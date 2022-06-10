@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import environ
 import os
+from datetime import timedelta
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -156,14 +157,48 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 CORS_ALLOW_HEADERS = (
-  'accept',
-  'accept-encoding',
-  'authorization',
-  'content-type',
-  'dnt',
-  'origin',
-  'user-agent',
-  'x-csrftoken',
-  'x-requested-with',
-  'access-control-allow-origin',
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'access-control-allow-origin',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
+
+SIMPLE_JWT = {
+    # アクセストークン(1時間)
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    # リフレッシュトークン(3日)
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
+    # 認証タイプ
+    'AUTH_HEADER_TYPES': ('JWT', ),
+    # 認証トークン
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken', ),
+    
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
+}
+DJOSER = {
+    #  メールアドレスでログイン
+    'LOGIN_FIELD': 'email',
+    # カスタムユーザー用シリアライザー
+    'SERIALIZERS': {
+        'user_create': 'account.serializers.UserSerializer',
+        'user': 'account.serializers.UserSerializer',
+        'current_user': 'account.serializers.UserSerializer',
+    },
+}
