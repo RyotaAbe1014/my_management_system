@@ -22,6 +22,7 @@
                 v-for="tag in filteredTags"
                 :key="tag.id"
                 class="ml-3 mt-3"
+                :to="{ name: 'TagDatail', params: { tagId: tag.id } }"
                 >{{ tag.name }}</v-chip
               >
             </v-col>

@@ -3,7 +3,7 @@
     <AppBar />
     <v-main class="grey lighten-2">
       <v-container>
-        <h1>タグ作成</h1>
+        <h1>タグ編集</h1>
         <v-container>
           <v-row>
             <v-col cols="4" class="white d-flex flex-wrap">
@@ -25,7 +25,10 @@
                   @click="validate"
                   class="ml-4"
                 >
-                  作成
+                  編集
+                </v-btn>
+                <v-btn color="error" @click="deleteTag" class="ml-4">
+                  削除
                 </v-btn>
               </v-form>
             </v-col>
@@ -39,36 +42,66 @@
 <script>
 import AppBar from "../../components/layouts/AppBar.vue";
 export default {
-  name: "TagCreate",
+  name: "TagDatail",
   components: {
     AppBar,
   },
   data() {
     return {
+      tag: null,
+      tagId: null,
       tagName: "",
       valid: true,
       tagNameRules: [(v) => !!v || "タグ名を入力してください"],
     };
   },
+  mounted() {
+    this.tagId = this.$route.params.tagId;
+    this.getTag();
+  },
   methods: {
+    async getTag() {
+      await this.axios
+        .get("http://0.0.0.0:8000/api/tag/" + this.tagId + "/")
+        .then((response) => {
+          console.log(response);
+          this.tag = response.data;
+          this.tagName = this.tag.name;
+        })
+        .catch((e) => {
+          console.log("エラー", e);
+        });
+    },
     async validate() {
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
         console.log(this.tagName);
         await this.axios
-          .post("http://0.0.0.0:8000/api/tag/index/", {
+          .put("http://0.0.0.0:8000/api/tag/" + this.tagId + "/", {
             name: this.tagName,
           })
           .then((response) => {
             console.log(response);
-            this.tagName = "";
+            this.$router.push("/tag");
           })
           .catch((e) => {
             console.log("タグ作成に失敗しました", e);
           });
       }
     },
+    async deleteTag() {
+      await this.axios
+        .delete("http://0.0.0.0:8000/api/tag/" + this.tagId + "/", {
+          id: this.tagId,
+        })
+        .then((response) => {
+          console.log(response);
+          this.$router.push("/tag");
+        })
+        .catch((e) => {
+          console.log("タグ削除に失敗しました", e);
+        });
+    },
   },
-  computed: {},
 };
 </script>

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import TopPageView from '../views/TopPageView.vue'
 import TagList from '../views/tag/TagList.vue'
 import TagCreate from '../views/tag/TagCreate.vue'
+import TagDatail from '../views/tag/TagDatail.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
     path: '/tag/create',
     name: 'TagCreate',
     component: TagCreate
+  },
+  {
+    path: '/tag/:tagId',
+    name: 'TagDatail',
+    component: TagDatail
   },
 ]
 
