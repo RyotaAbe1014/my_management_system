@@ -22,14 +22,14 @@
             <v-list-item-title>目標を書く</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
-          <v-list-item-icon>
-            <v-icon>mdi-tag</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>タグを作成する</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item to="/tag/create">
+            <v-list-item-icon>
+              <v-icon>mdi-tag</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>タグを作成する</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         <v-list-item to="/">
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
