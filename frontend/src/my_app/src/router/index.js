@@ -4,6 +4,7 @@ import TopPageView from '../views/TopPageView.vue'
 import TagList from '../views/tag/TagList.vue'
 import TagCreate from '../views/tag/TagCreate.vue'
 import TagDatail from '../views/tag/TagDatail.vue'
+import Auth from '../views/auth/Auth.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
     path: '/tag/:tagId',
     name: 'TagDatail',
     component: TagDatail
+  },
+  {
+    path: '/login',
+    name: 'Auth',
+    component: Auth
   },
 ]
 
