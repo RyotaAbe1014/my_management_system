@@ -6,7 +6,7 @@
       </v-sheet>
       <v-divider></v-divider>
       <v-list>
-        <v-list-item link>
+        <v-list-item link to="/daily_report/create">
           <v-list-item-icon>
             <v-icon>mdi-calendar-edit</v-icon>
           </v-list-item-icon>
