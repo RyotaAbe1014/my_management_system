@@ -44,15 +44,21 @@ export default {
     return {
       tags: [],
       keyword: "",
+      auth: [],
+      accessToken: null,
     };
   },
   mounted() {
+    this.auth = JSON.parse(sessionStorage.getItem("user"));
+    this.accessToken = this.auth.accessToken;
+    console.log(this.accessToken);
     this.getTags();
   },
   methods: {
     async getTags() {
       await this.axios
-        .get("http://0.0.0.0:8000/api/tag/index/")
+        .get("http://0.0.0.0:8000/api/tag/index/",
+          { headers: { Authorization: "JWT " + this.accessToken } })
         .then((response) => {
           console.log(response);
           this.tags = response.data;
