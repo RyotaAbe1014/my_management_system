@@ -48,7 +48,14 @@ export default {
       tagName: "",
       valid: true,
       tagNameRules: [(v) => !!v || "タグ名を入力してください"],
+      auth: [],
+      accessToken: null,
     };
+  },
+  mounted() {
+    this.auth = JSON.parse(sessionStorage.getItem("user"));
+    this.accessToken = this.auth.accessToken;
+    console.log(this.accessToken);
   },
   methods: {
     async validate() {
@@ -56,9 +63,13 @@ export default {
       if (this.$refs.form.validate()) {
         console.log(this.tagName);
         await this.axios
-          .post("http://0.0.0.0:8000/api/tag/index/", {
-            name: this.tagName,
-          })
+          .post(
+            "http://0.0.0.0:8000/api/tag/index/",
+            {
+              name: this.tagName,
+            },
+            { headers: { Authorization: "JWT " + this.accessToken } }
+          )
           .then((response) => {
             console.log(response);
             this.tagName = "";

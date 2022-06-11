@@ -57,8 +57,9 @@ export default {
   methods: {
     async getTags() {
       await this.axios
-        .get("http://0.0.0.0:8000/api/tag/index/",
-          { headers: { Authorization: "JWT " + this.accessToken } })
+        .get("http://0.0.0.0:8000/api/tag/index/", {
+          headers: { Authorization: "JWT " + this.accessToken },
+        })
         .then((response) => {
           console.log(response);
           this.tags = response.data;
