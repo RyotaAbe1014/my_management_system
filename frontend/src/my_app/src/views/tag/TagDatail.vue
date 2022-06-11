@@ -53,16 +53,22 @@ export default {
       tagName: "",
       valid: true,
       tagNameRules: [(v) => !!v || "タグ名を入力してください"],
+      auth: [],
+      accessToken: null,
     };
   },
   mounted() {
     this.tagId = this.$route.params.tagId;
+    this.auth = JSON.parse(sessionStorage.getItem("user"));
+    this.accessToken = this.auth.accessToken;
     this.getTag();
   },
   methods: {
     async getTag() {
       await this.axios
-        .get("http://0.0.0.0:8000/api/tag/" + this.tagId + "/")
+        .get("http://0.0.0.0:8000/api/tag/" + this.tagId + "/", {
+          headers: { Authorization: "JWT " + this.accessToken },
+        })
         .then((response) => {
           console.log(response);
           this.tag = response.data;
@@ -77,22 +83,26 @@ export default {
       if (this.$refs.form.validate()) {
         console.log(this.tagName);
         await this.axios
-          .put("http://0.0.0.0:8000/api/tag/" + this.tagId + "/", {
-            name: this.tagName,
-          })
+          .put(
+            "http://0.0.0.0:8000/api/tag/" + this.tagId + "/",
+            {
+              name: this.tagName,
+            },
+            { headers: { Authorization: "JWT " + this.accessToken } }
+          )
           .then((response) => {
             console.log(response);
             this.$router.push("/tag");
           })
           .catch((e) => {
-            console.log("タグ作成に失敗しました", e);
+            console.log("タグの更新に失敗しました", e);
           });
       }
     },
     async deleteTag() {
       await this.axios
         .delete("http://0.0.0.0:8000/api/tag/" + this.tagId + "/", {
-          id: this.tagId,
+          headers: { Authorization: "JWT " + this.accessToken },
         })
         .then((response) => {
           console.log(response);
