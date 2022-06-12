@@ -17,10 +17,9 @@ class BaseModel(models.Model):
 
 class Target(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag)
     name = models.CharField('目標名', max_length=50)
     status = models.BooleanField(default=False)
-    completed_at = models.DateTimeField(null=True)
+    completed_at = models.DateField(null=True, blank=True)
 
     class Meta:
         db_table = 'targets'

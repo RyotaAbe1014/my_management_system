@@ -69,10 +69,16 @@
             <v-col cols="6" md="2">
               <v-card class="mx-auto" max-width="344" height="150">
                 <v-card-text>
-                  <p class="text-h5 text--primary">未達成一覧</p>
+                  <p class="text-h5 text--primary">目標一覧</p>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn class="mx-auto" outlined color="primary"> GO </v-btn>
+                  <router-link
+                    to="target"
+                    class="mx-auto"
+                    style="text-decoration: none"
+                  >
+                    <v-btn class="mx-auto" outlined color="primary"> GO </v-btn>
+                  </router-link>
                 </v-card-actions>
               </v-card>
             </v-col>

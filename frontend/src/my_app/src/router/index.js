@@ -7,6 +7,7 @@ import TagDatail from '../views/tag/TagDatail.vue'
 import Auth from '../views/auth/Auth.vue'
 import CreateReport from '../views/daily_report/CreateReport.vue'
 import ReportList from '../views/daily_report/ReportList.vue'
+import TargetList from '../views/target_management/TargetList.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -49,6 +50,12 @@ const routes = [
     path: '/daily_report/',
     name: 'ReportList',
     component: ReportList,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/target/',
+    name: 'TargetList',
+    component: TargetList,
     meta: { requiresAuth: true }
   },
 ]
