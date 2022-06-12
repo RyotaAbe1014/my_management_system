@@ -129,13 +129,14 @@ export default {
       console.log(this.date);
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        let tagsId = this.tags.map((tag) => tag.id);
+        console.log(this.tags)
+        // let tagsId = this.tags.map((tag) => tag.id);
         await this.axios
           .post(
             "http://0.0.0.0:8000/api/daily_report/index/",
             {
               user: this.userId,
-              tags: tagsId,
+              tags: this.select,
               content: this.content,
               notice: this.notice,
               target_date: this.date,
@@ -147,6 +148,7 @@ export default {
           })
           .catch((e) => {
             console.log("日報作成に失敗しました", e);
+            console.log(e.request);
           });
       }
     },

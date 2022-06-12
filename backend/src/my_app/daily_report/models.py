@@ -24,4 +24,4 @@ class DailyReport(BaseModel):
 
     class Meta:
         db_table = 'daily_reports'
-        ordering = ['target_date']
+        ordering = ['-target_date']

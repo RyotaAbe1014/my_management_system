@@ -75,7 +75,7 @@ export default {
         .then((response) => {
           console.log(response.data.access);
           this.accessToken = response.data.access;
-          // http://localhost:8000/api/auth/users/me/
+
         })
         .catch((e) => {
           console.log("エラー", e);
