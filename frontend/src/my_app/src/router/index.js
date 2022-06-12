@@ -9,6 +9,7 @@ import CreateReport from '../views/daily_report/CreateReport.vue'
 import ReportList from '../views/daily_report/ReportList.vue'
 import TargetList from '../views/target_management/TargetList.vue'
 import CreateTarget from '../views/target_management/CreateTarget.vue'
+import EditTarget from '../views/target_management/EditTarget.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -63,6 +64,12 @@ const routes = [
     path: '/target/create',
     name: 'CreateTarget',
     component: CreateTarget,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/target/edit/:targetId',
+    name: 'EditTarget',
+    component: EditTarget,
     meta: { requiresAuth: true }
   },
 ]
