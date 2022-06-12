@@ -8,6 +8,7 @@ import Auth from '../views/auth/Auth.vue'
 import CreateReport from '../views/daily_report/CreateReport.vue'
 import ReportList from '../views/daily_report/ReportList.vue'
 import TargetList from '../views/target_management/TargetList.vue'
+import CreateTarget from '../views/target_management/CreateTarget.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -56,6 +57,12 @@ const routes = [
     path: '/target/',
     name: 'TargetList',
     component: TargetList,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/target/create',
+    name: 'CreateTarget',
+    component: CreateTarget,
     meta: { requiresAuth: true }
   },
 ]

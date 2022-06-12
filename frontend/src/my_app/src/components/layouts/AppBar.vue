@@ -14,7 +14,7 @@
             <v-list-item-title>日報を書く</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item to="/target/create">
           <v-list-item-icon>
             <v-icon>mdi-text-box-plus</v-icon>
           </v-list-item-icon>
