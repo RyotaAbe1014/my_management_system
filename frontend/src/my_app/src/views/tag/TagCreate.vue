@@ -72,7 +72,7 @@ export default {
           )
           .then((response) => {
             console.log(response);
-            this.tagName = "";
+            this.$router.push("/tag");
           })
           .catch((e) => {
             console.log("タグ作成に失敗しました", e);

@@ -73,7 +73,7 @@ export default {
           )
           .then((response) => {
             console.log(response);
-            this.target = "";
+            this.$router.push("/target");
           })
           .catch((e) => {
             console.log("目標作成に失敗しました", e);

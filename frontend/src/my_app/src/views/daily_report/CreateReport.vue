@@ -145,6 +145,7 @@ export default {
           )
           .then((response) => {
             console.log(response);
+            this.$router.push("/daily_report");
           })
           .catch((e) => {
             console.log("日報作成に失敗しました", e);
