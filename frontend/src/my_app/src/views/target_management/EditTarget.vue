@@ -141,6 +141,7 @@ export default {
           )
           .then((response) => {
             console.log(response);
+            this.$router.push("/target");
           })
           .catch((e) => {
             console.log("目標更新に失敗しました", e);
