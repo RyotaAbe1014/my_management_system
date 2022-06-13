@@ -37,3 +37,4 @@ toml==0.10.2
 uritemplate==4.1.1
 urllib3==1.26.9
 uWSGI==2.0.19
+django-filter==21.1

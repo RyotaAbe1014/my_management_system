@@ -3,50 +3,59 @@
     <AppBar />
     <v-main class="grey lighten-2">
       <v-container>
-        <h1>日報作成</h1>
+        <h1>日報検索</h1>
         <v-container>
+          <v-row>
+            <v-col cols="3">
+              <v-menu
+                ref="menu"
+                v-model="menu"
+                :close-on-content-click="false"
+                :return-value.sync="date"
+                transition="scale-transition"
+                offset-y
+                min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="date"
+                    label="対象日"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="date"
+                  no-title
+                  scrollable
+                  locale="ja-jp"
+                >
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="menu = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn text color="primary" @click="$refs.menu.save(date)">
+                    OK
+                  </v-btn>
+                </v-date-picker>
+              </v-menu></v-col
+            >
+            <v-btn
+              class="mx-1"
+              fab
+              dark
+              color="deep-purple accent-4"
+              @click="getReport"
+            >
+              <v-icon dark> mdi-magnify </v-icon>
+            </v-btn>
+          </v-row>
           <v-row>
             <v-col cols="10" class="white">
               <v-form ref="form" v-model="valid" lazy-validation class="ml-10">
                 <v-container fluid>
-                  <v-menu
-                    ref="menu"
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    :return-value.sync="date"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                        v-model="date"
-                        label="対象日"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker
-                      v-model="date"
-                      no-title
-                      scrollable
-                      locale="ja-jp"
-                    >
-                      <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="menu = false">
-                        Cancel
-                      </v-btn>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="$refs.menu.save(date)"
-                      >
-                        OK
-                      </v-btn>
-                    </v-date-picker>
-                  </v-menu>
                   <v-combobox
                     v-model="select"
                     :items="tags"
@@ -83,7 +92,7 @@
 <script>
 import AppBar from "../../components/layouts/AppBar.vue";
 export default {
-  name: "CreateReport",
+  name: "EditReport",
   components: {
     AppBar,
   },
@@ -125,11 +134,30 @@ export default {
           console.log("エラー", e);
         });
     },
+    async getReport() {
+      await this.axios
+        .get(
+          "http://0.0.0.0:8000/api/daily_report/" + this.date + "/",
+          {
+            headers: { Authorization: "JWT " + this.accessToken },
+          },
+          {
+            target_date: this.date,
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log("エラー", e);
+        });
+    },
     async validate() {
       console.log(this.date);
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        console.log(this.tags)
+        console.log(this.tags);
+        // let tagsId = this.tags.map((tag) => tag.id);
         await this.axios
           .post(
             "http://0.0.0.0:8000/api/daily_report/index/",
@@ -138,7 +166,6 @@ export default {
               tags: this.select,
               content: this.content,
               notice: this.notice,
-              target_date: this.date,
             },
             { headers: { Authorization: "JWT " + this.accessToken } }
           )
@@ -153,6 +180,5 @@ export default {
       }
     },
   },
-  computed: {},
 };
 </script>

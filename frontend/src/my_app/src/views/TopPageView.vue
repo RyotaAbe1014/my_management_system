@@ -47,7 +47,13 @@
                   <p class="text-h5 text--primary">日報検索</p>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn class="mx-auto" outlined color="primary"> GO </v-btn>
+                  <router-link
+                    to="daily_report/edit"
+                    class="mx-auto"
+                    style="text-decoration: none"
+                  >
+                    <v-btn class="mx-auto" outlined color="primary"> GO </v-btn>
+                  </router-link>
                 </v-card-actions>
               </v-card>
             </v-col>

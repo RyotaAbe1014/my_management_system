@@ -6,6 +6,7 @@ import TagCreate from '../views/tag/TagCreate.vue'
 import TagDatail from '../views/tag/TagDatail.vue'
 import Auth from '../views/auth/Auth.vue'
 import CreateReport from '../views/daily_report/CreateReport.vue'
+import EditReport from '../views/daily_report/EditReport.vue'
 import ReportList from '../views/daily_report/ReportList.vue'
 import TargetList from '../views/target_management/TargetList.vue'
 import CreateTarget from '../views/target_management/CreateTarget.vue'
@@ -46,6 +47,12 @@ const routes = [
     path: '/daily_report/create',
     name: 'CreateReport',
     component: CreateReport,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/daily_report/edit/',
+    name: 'EditReport',
+    component: EditReport,
     meta: { requiresAuth: true }
   },
   {
