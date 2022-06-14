@@ -16,4 +16,4 @@ class DailyReportSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = DailyReport
-        fields = ['user', 'tags', 'content', 'notice', 'target_date']
+        fields = ['id', 'user', 'tags', 'content', 'notice', 'target_date']

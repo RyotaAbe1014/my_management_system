@@ -78,7 +78,7 @@
                   @click="validate"
                   class="ml-4"
                 >
-                  作成
+                  更新
                 </v-btn>
               </v-form>
             </v-col>
@@ -103,15 +103,15 @@ export default {
       contentRules: [(v) => !!v || "内容を入力してください"],
       auth: [],
       accessToken: null,
-      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
+      date: null,
       menu: null,
       select: [],
       tags: [],
       userId: null,
       content: null,
       notice: null,
+      reportId: null,
+      target_date: null,
     };
   },
   mounted() {
@@ -146,7 +146,13 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data[0].id);
+          const report = response.data[0];
+          this.select = report.tags;
+          this.notice = report.notice;
+          this.content = report.content;
+          this.reportId = report.id;
+          this.target_date = report.target_date;
         })
         .catch((e) => {
           console.log("エラー", e);
@@ -156,16 +162,16 @@ export default {
       console.log(this.date);
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        console.log(this.tags);
-        // let tagsId = this.tags.map((tag) => tag.id);
+        console.log(this.reportId);
         await this.axios
-          .post(
-            "http://0.0.0.0:8000/api/daily_report/index/",
+          .put(
+            `http://0.0.0.0:8000/api/daily_report/${this.reportId}/`,
             {
               user: this.userId,
               tags: this.select,
               content: this.content,
               notice: this.notice,
+              target_date: this.target_date,
             },
             { headers: { Authorization: "JWT " + this.accessToken } }
           )
@@ -174,7 +180,7 @@ export default {
             this.$router.push("/daily_report");
           })
           .catch((e) => {
-            console.log("日報作成に失敗しました", e);
+            console.log("日報更新に失敗しました", e);
             console.log(e.request);
           });
       }

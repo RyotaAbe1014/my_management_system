@@ -1,3 +1,4 @@
+import json
 from rest_framework import generics
 from .serializers import DailyReportSerializer
 from .models import DailyReport
@@ -12,6 +13,11 @@ class ReportListCreateAPIView(generics.ListCreateAPIView):
 class ReportRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = DailyReport.objects.all()
     serializer_class = DailyReportSerializer
+
+    # def update(self, request, *args, **kwargs):
+    #     print(request.data.pop('tags', None))
+    #     request.data.update({'tags': json.loads(request.data.pop('tags', None))})
+    #     return super().update(request, *args, **kwargs)
 
 
 class GetReportAPIView(generics.ListAPIView):
