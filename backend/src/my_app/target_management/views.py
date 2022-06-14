@@ -13,3 +13,11 @@ class TargetListCreateAPIView(generics.ListCreateAPIView):
 class TargetRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Target.objects.all()
     serializer_class = TargetSerializer
+
+
+class CompletedTargetListAPIView(generics.ListAPIView):
+    queryset = Target.objects.all()
+    serializer_class = TargetSerializer
+
+    def get_queryset(self):
+        return Target.objects.filter(status=True).order_by('-completed_at')

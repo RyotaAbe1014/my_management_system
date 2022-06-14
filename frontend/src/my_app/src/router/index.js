@@ -11,6 +11,7 @@ import ReportList from '../views/daily_report/ReportList.vue'
 import TargetList from '../views/target_management/TargetList.vue'
 import CreateTarget from '../views/target_management/CreateTarget.vue'
 import EditTarget from '../views/target_management/EditTarget.vue'
+import CompletedTargetList from '../views/target_management/CompletedTargetList.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -77,6 +78,12 @@ const routes = [
     path: '/target/edit/:targetId',
     name: 'EditTarget',
     component: EditTarget,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/target/completed',
+    name: 'CompletedTargetList',
+    component: CompletedTargetList,
     meta: { requiresAuth: true }
   },
 ]

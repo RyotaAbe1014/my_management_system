@@ -100,7 +100,13 @@
                   <p class="text-h5 text--primary">達成済一覧</p>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn class="mx-auto" outlined color="primary"> GO </v-btn>
+                  <router-link
+                    to="target/completed"
+                    class="mx-auto"
+                    style="text-decoration: none"
+                  >
+                    <v-btn class="mx-auto" outlined color="primary"> GO </v-btn>
+                  </router-link>
                 </v-card-actions>
               </v-card>
             </v-col>
