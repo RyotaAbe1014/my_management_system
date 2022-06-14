@@ -1,19 +1,7 @@
 from rest_framework import generics
 from .serializers import DailyReportSerializer
 from .models import DailyReport
-from django_filters import rest_framework as filters
 # Create your views here.
-
-
-class ReportFilter(filters.FilterSet):
-
-    # フィルタの定義
-    target_date = filters.DateFilter(field_name="target_date",lookup_expr='exact')
-
-    class Meta:
-        model = DailyReport
-        # デフォルトの検索方法でいいなら、モデルフィールド名のフィルタを直接定義できる。
-        fields = ['user', 'tags', 'content', 'notice', 'target_date']
 
 
 class ReportListCreateAPIView(generics.ListCreateAPIView):
@@ -29,5 +17,7 @@ class ReportRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
 class GetReportAPIView(generics.ListAPIView):
     queryset = DailyReport.objects.all()
     serializer_class = DailyReportSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
-    filter_class = ReportFilter
+
+    def get_queryset(self):
+        target_date = self.kwargs['target_date']
+        return DailyReport.objects.filter(target_date=target_date)

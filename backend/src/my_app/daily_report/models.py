@@ -20,7 +20,7 @@ class DailyReport(BaseModel):
     tags = models.ManyToManyField(Tag)
     content = models.TextField()
     notice = models.TextField()
-    target_date = models.DateField()
+    target_date = models.DateField(unique=True)
 
     class Meta:
         db_table = 'daily_reports'
