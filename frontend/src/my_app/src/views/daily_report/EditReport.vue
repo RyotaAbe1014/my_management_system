@@ -137,7 +137,7 @@ export default {
     async getReport() {
       await this.axios
         .get(
-          "http://0.0.0.0:8000/api/daily_report/" + this.date + "/",
+          `http://0.0.0.0:8000/api/daily_report/${this.date}/`,
           {
             headers: { Authorization: "JWT " + this.accessToken },
           },

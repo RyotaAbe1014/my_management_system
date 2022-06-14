@@ -66,7 +66,7 @@ export default {
   methods: {
     async getTag() {
       await this.axios
-        .get("http://0.0.0.0:8000/api/tag/" + this.tagId + "/", {
+        .get(`http://0.0.0.0:8000/api/tag/${this.tagId}/`, {
           headers: { Authorization: "JWT " + this.accessToken },
         })
         .then((response) => {
@@ -84,7 +84,7 @@ export default {
         console.log(this.tagName);
         await this.axios
           .put(
-            "http://0.0.0.0:8000/api/tag/" + this.tagId + "/",
+            `http://0.0.0.0:8000/api/tag/${this.tagId}/`,
             {
               name: this.tagName,
             },
@@ -101,7 +101,7 @@ export default {
     },
     async deleteTag() {
       await this.axios
-        .delete("http://0.0.0.0:8000/api/tag/" + this.tagId + "/", {
+        .delete(`http://0.0.0.0:8000/api/tag/${this.tagId}/`, {
           headers: { Authorization: "JWT " + this.accessToken },
         })
         .then((response) => {
