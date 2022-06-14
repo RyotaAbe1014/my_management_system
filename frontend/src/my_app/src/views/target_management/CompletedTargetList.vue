@@ -27,12 +27,19 @@
                   </td>
                   <td>
                     <router-link
-                      :to="{ name: 'EditTarget', params: { targetId: target.id } }"
+                      :to="{
+                        name: 'EditTarget',
+                        params: { targetId: target.id },
+                      }"
                       style="text-decoration: none"
                     >
-                    <v-icon color="green darken-2">mdi-pencil</v-icon>
+                      <v-icon color="green darken-2">mdi-pencil</v-icon>
                     </router-link>
-                    <v-icon color="red darken-2">mdi-delete</v-icon>
+                    <v-icon
+                      color="red darken-2"
+                      @click="deleteTarget(target.id, target)"
+                      >mdi-delete</v-icon
+                    >
                   </td>
                 </tr>
               </tbody>
@@ -75,6 +82,22 @@ export default {
         })
         .catch((e) => {
           console.log("エラー", e);
+        });
+    },
+
+    async deleteTarget(targetId, target) {
+      console.log("click!");
+      await this.axios
+        .delete(`http://0.0.0.0:8000/api/target_management/${targetId}/`, {
+          headers: { Authorization: "JWT " + this.accessToken },
+        })
+        .then((response) => {
+          console.log(response);
+          let index = this.completedTargets.indexOf(target);
+          this.completedTargets.splice(index, 1);
+        })
+        .catch((e) => {
+          console.log("目標削除に失敗しました", e);
         });
     },
   },
