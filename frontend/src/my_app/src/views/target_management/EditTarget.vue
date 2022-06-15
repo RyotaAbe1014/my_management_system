@@ -7,6 +7,14 @@
         <v-container>
           <v-row>
             <v-col cols="7" class="white">
+              <v-alert
+                dense
+                outlined
+                type="error"
+                class="error-msg"
+                v-if="errorMessage"
+                >{{ errorMessage }}
+              </v-alert>
               <v-form ref="form" v-model="valid" lazy-validation class="ml-10">
                 <v-container fluid>
                   <v-checkbox
@@ -97,6 +105,7 @@ export default {
         .toISOString()
         .substr(0, 10),
       check: true,
+      errorMessage: null,
     };
   },
   mounted() {
@@ -120,8 +129,8 @@ export default {
           this.target = response.data;
           this.targetName = this.target.name;
         })
-        .catch((e) => {
-          console.log("エラー", e);
+        .catch(() => {
+          this.errorMessage = "目標の取得に失敗しました";
         });
     },
 
@@ -145,7 +154,7 @@ export default {
           })
           .catch((e) => {
             console.log("目標更新に失敗しました", e);
-            console.log(e.request);
+            this.errorMessage = "目標更新に失敗しました";
           });
       }
     },

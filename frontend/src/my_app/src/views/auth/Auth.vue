@@ -18,7 +18,16 @@
             v-model="password"
             type="password"
             label="パスワード"
+            required
           />
+            <v-alert
+              dense
+              outlined
+              type="error"
+              class="error-msg"
+              v-if="errorMessage"
+              >{{ errorMessage }}
+            </v-alert>
           <v-card-actions>
             <v-btn
               class="deep-purple accent-4 mx-auto"
@@ -47,6 +56,7 @@ export default {
       ],
       password: "",
       accessToken: null,
+      errorMessage: null,
     };
   },
   computed: {
@@ -75,27 +85,28 @@ export default {
         .then((response) => {
           console.log(response.data.access);
           this.accessToken = response.data.access;
-
+          this.axios
+            .get("http://0.0.0.0:8000/api/auth/users/me/", {
+              headers: { Authorization: "JWT " + this.accessToken },
+            })
+            .then((response) => {
+              console.log(response);
+              const auth = {
+                id: response.data.id,
+                name: response.data.name,
+                email: response.data.email,
+                accessToken: this.accessToken,
+              };
+              sessionStorage.setItem("user", JSON.stringify(auth));
+              this.$router.push("/");
+            })
+            .catch((e) => {
+              console.log("エラー", e);
+            });
         })
         .catch((e) => {
           console.log("エラー", e);
-        });
-      await this.axios
-        .get("http://0.0.0.0:8000/api/auth/users/me/",
-          { headers: { Authorization: "JWT " + this.accessToken } })
-        .then((response) => {
-          console.log(response);
-          const auth = {
-            id: response.data.id,
-            name: response.data.name,
-            email: response.data.email,
-            accessToken: this.accessToken,
-          };
-          sessionStorage.setItem("user", JSON.stringify(auth));
-          this.$router.push("/");
-        })
-        .catch((e) => {
-          console.log("エラー", e);
+          this.errorMessage = "ログインに失敗しました";
         });
     },
   },

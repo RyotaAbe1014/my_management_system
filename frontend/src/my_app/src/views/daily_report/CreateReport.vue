@@ -7,6 +7,14 @@
         <v-container>
           <v-row>
             <v-col cols="10" class="white">
+              <v-alert
+                dense
+                outlined
+                type="error"
+                class="error-msg"
+                v-if="errorMessage"
+                >{{ errorMessage }}
+              </v-alert>
               <v-form ref="form" v-model="valid" lazy-validation class="ml-10">
                 <v-container fluid>
                   <v-menu
@@ -17,6 +25,7 @@
                     transition="scale-transition"
                     offset-y
                     min-width="auto"
+                    required
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
@@ -55,12 +64,17 @@
                     multiple
                     chips
                   ></v-combobox>
-                  <v-text-field v-model="notice" label="気付き"></v-text-field>
+                  <v-text-field
+                    v-model="notice"
+                    label="気付き"
+                    required
+                  ></v-text-field>
                   <v-textarea
                     label="内容"
                     auto-grow
                     :rules="contentRules"
                     v-model="content"
+                    required
                   ></v-textarea>
                 </v-container>
                 <v-btn
@@ -103,6 +117,7 @@ export default {
       userId: null,
       content: null,
       notice: null,
+      errorMessage: null,
     };
   },
   mounted() {
@@ -129,7 +144,7 @@ export default {
       console.log(this.date);
       this.$refs.form.validate();
       if (this.$refs.form.validate()) {
-        console.log(this.tags)
+        console.log(this.tags);
         await this.axios
           .post(
             "http://0.0.0.0:8000/api/daily_report/index/",
@@ -148,7 +163,7 @@ export default {
           })
           .catch((e) => {
             console.log("日報作成に失敗しました", e);
-            console.log(e.request);
+            this.errorMessage = "日報作成に失敗しました";
           });
       }
     },

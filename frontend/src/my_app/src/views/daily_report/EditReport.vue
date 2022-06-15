@@ -54,6 +54,14 @@
           </v-row>
           <v-row>
             <v-col cols="10" class="white">
+              <v-alert
+                dense
+                outlined
+                type="error"
+                class="error-msg"
+                v-if="errorMessage"
+                >{{ errorMessage }}
+              </v-alert>
               <v-form ref="form" v-model="valid" lazy-validation class="ml-10">
                 <v-container fluid>
                   <v-combobox
@@ -112,6 +120,7 @@ export default {
       notice: null,
       reportId: null,
       target_date: null,
+      errorMessage: null,
     };
   },
   mounted() {
@@ -156,6 +165,7 @@ export default {
         })
         .catch((e) => {
           console.log("エラー", e);
+          this.errorMessage = "日報の取得に失敗しました";
         });
     },
     async validate() {
@@ -181,7 +191,7 @@ export default {
           })
           .catch((e) => {
             console.log("日報更新に失敗しました", e);
-            console.log(e.request);
+            this.errorMessage = "日報更新に失敗しました";
           });
       }
     },

@@ -7,6 +7,14 @@
         <v-container>
           <v-row>
             <v-col cols="4" class="white d-flex flex-wrap">
+              <v-alert
+                dense
+                outlined
+                type="error"
+                class="error-msg"
+                v-if="errorMessage"
+                >{{ errorMessage }}
+              </v-alert>
               <v-form
                 ref="form"
                 v-model="valid"
@@ -55,6 +63,7 @@ export default {
       tagNameRules: [(v) => !!v || "タグ名を入力してください"],
       auth: [],
       accessToken: null,
+      errorMessage: null,
     };
   },
   mounted() {
@@ -96,6 +105,7 @@ export default {
           })
           .catch((e) => {
             console.log("タグの更新に失敗しました", e);
+            this.errorMessage = "タグの更新に失敗しました";
           });
       }
     },
@@ -110,6 +120,7 @@ export default {
         })
         .catch((e) => {
           console.log("タグ削除に失敗しました", e);
+          this.errorMessage = "タグ削除に失敗しました";
         });
     },
   },

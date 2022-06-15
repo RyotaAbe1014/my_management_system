@@ -7,6 +7,14 @@
         <v-container>
           <v-row>
             <v-col cols="7" class="white d-flex flex-wrap">
+              <v-alert
+                dense
+                outlined
+                type="error"
+                class="error-msg"
+                v-if="errorMessage"
+                >{{ errorMessage }}
+              </v-alert>
               <v-form
                 ref="form"
                 v-model="valid"
@@ -51,6 +59,7 @@ export default {
       accessToken: null,
       userId: null,
       target: null,
+      errorMessage: null,
     };
   },
   mounted() {
@@ -77,7 +86,7 @@ export default {
           })
           .catch((e) => {
             console.log("目標作成に失敗しました", e);
-            console.log(e.request);
+            this.errorMessage = "目標作成に失敗しました";
           });
       }
     },
