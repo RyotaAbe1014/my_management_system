@@ -35,6 +35,7 @@
                         v-model="date"
                         label="完了日"
                         prepend-icon="mdi-calendar"
+                        clearable
                         readonly
                         v-bind="attrs"
                         v-on="on"
