@@ -47,7 +47,14 @@
           </v-simple-table>
         </v-container>
         <h1>達成割合</h1>
-        <DoughnutExample width="200" height="100"> </DoughnutExample>
+        <TargetGraph
+          :height="this.height"
+          :width="this.width"
+          :completedTargetCount="this.completedTargetCount"
+          :inCompletedTargetCount="this.inCompletedTargetCount"
+          ref="targetGraph"
+        >
+        </TargetGraph>
       </v-container>
     </v-main>
   </v-app>
@@ -55,18 +62,23 @@
 
 <script>
 import AppBar from "../../components/layouts/AppBar.vue";
-import DoughnutExample from "../../components/DoughnutExample.vue";
+import TargetGraph from "../../components/TargetGraph.vue";
+
 export default {
   name: "TargetList",
   components: {
     AppBar,
-     DoughnutExample,
+    TargetGraph,
   },
   data() {
     return {
       auth: [],
       accessToken: null,
       targets: [],
+      completedTargetCount: null,
+      inCompletedTargetCount: null,
+      width: 200,
+      height: 100,
     };
   },
   mounted() {
@@ -82,7 +94,22 @@ export default {
         })
         .then((response) => {
           this.targets = response.data;
-          console.log(this.targets);
+          if (this.targets.length) {
+            // 完了済みの目標をカウントする
+            const completedTargets = this.targets.filter((value) => {
+              return value.status === true;
+            });
+            this.completedTargetCount = completedTargets.length;
+            // 未完了の目標をカウントする
+            const inCompletedTargets = this.targets.filter((value) => {
+              return value.status === false;
+            });
+            this.inCompletedTargetCount = inCompletedTargets.length;
+            // 子コンポーネントのグラフを再描画する
+            this.$refs.targetGraph.createChart();
+          } else {
+            console.log("ソートしません！");
+          }
         })
         .catch((e) => {
           console.log("エラー", e);
