@@ -35,13 +35,19 @@
                     >
                       <v-icon color="green darken-2">mdi-pencil</v-icon>
                     </router-link>
-                    <v-icon color="red darken-2" @click="deleteTarget(target.id, target)">mdi-delete</v-icon>
+                    <v-icon
+                      color="red darken-2"
+                      @click="deleteTarget(target.id, target)"
+                      >mdi-delete</v-icon
+                    >
                   </td>
                 </tr>
               </tbody>
             </template>
           </v-simple-table>
         </v-container>
+        <h1>達成割合</h1>
+        <DoughnutExample width="200" height="100"> </DoughnutExample>
       </v-container>
     </v-main>
   </v-app>
@@ -49,10 +55,12 @@
 
 <script>
 import AppBar from "../../components/layouts/AppBar.vue";
+import DoughnutExample from "../../components/DoughnutExample.vue";
 export default {
   name: "TargetList",
   components: {
     AppBar,
+     DoughnutExample,
   },
   data() {
     return {
